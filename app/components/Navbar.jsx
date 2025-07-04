@@ -12,16 +12,15 @@ const Navbar = () => {
     const closeMenu = () => setIsMenuOpen(false);
 
     useEffect(() => {
+        if (!isMenuOpen) return;
+        
         const handleClickOutside = (event) => {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
-                closeMenu();
+                setIsMenuOpen(false);
             }
         };
 
-        if (isMenuOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
-        }
-
+        document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [isMenuOpen]);
 
@@ -32,7 +31,7 @@ const Navbar = () => {
             </div>
             <nav className='w-full fixed px-5 lg:px-8 xl:px-[8%] py-4 flex items-center justify-between z-50'>
                 <a href="#top">
-                    <Image src={assets.logo} alt="logo" className="mr-4 w-58 cursor-pointer" />
+                    <Image src={assets.logo} alt="logo" className="mr-4 w-50 cursor-pointer" />
                 </a>
                 <ul className='hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 bg-white shadow-sm bg-opacity-50'>
                     <li><a className='font-Ovo' href="#top">Domov</a></li>
