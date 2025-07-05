@@ -51,7 +51,7 @@ const Navbar = () => {
                     </button>
                 </div>
 
-                <ul ref={menuRef} className={`flex md:hidden flex-col gap-4 py-20 px-10 fixed top-0 bottom-0 w-64 z-50 h-screen bg-rose-50 transition-all duration-500 ${isMenuOpen ? 'right-0' : '-right-64'}`}>
+                <ul ref={menuRef} className={`flex md:hidden flex-col gap-4 py-20 px-10 fixed top-0 bottom-0 w-64 z-40 h-screen bg-rose-50 transition-all duration-500 ${isMenuOpen ? 'right-0' : '-right-64'}`}>
                     <div onClick={closeMenu} className='absolute top-6 right-6'>
                         <Image src={assets.close_black} alt='' className='w-5 cursor-pointer'/>
                     </div>
