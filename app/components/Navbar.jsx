@@ -26,19 +26,29 @@ const Navbar = () => {
 
     return (
         <>
-            <div className='fixed top-0 right-0 w-11/12 -z-10 translate-y-[-80%]'>
-                <Image src={assets.header_bg_color} alt='' className='w-full' />
-            </div>
             <nav className='w-full fixed px-5 lg:px-8 xl:px-[8%] py-4 flex items-center justify-between z-50'>
                 <a href="#top">
-                    <Image src={assets.logo} alt="logo" className="mr-4 w-50 cursor-pointer" />
+                    <div className="mr-4 cursor-pointer text-l md:text-xl font-bold text-gray-800 hover:text-gray-600 transition-colors duration-300 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 md:w-6 md:h-6 text-gray-800">
+                            <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
+                            <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/>
+                            <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/>
+                            <path d="M10 6h4"/>
+                            <path d="M10 10h4"/>
+                            <path d="M10 14h4"/>
+                            <path d="M10 18h4"/>
+                        </svg>
+                        <div>
+                            <span className="text-gray-800">Obchodné</span><span className="text-gray-600">Priestory</span><span className="text-sm font-normal text-gray-400">.sk</span>
+                        </div>
+                    </div>
                 </a>
                 <ul className='hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 bg-white shadow-sm bg-opacity-50'>
-                    <li><a className='font-Ovo' href="#top">Domov</a></li>
-                    <li><a className='font-Ovo' href="#popis">Popis</a></li>
-                    <li><a className='font-Ovo' href="#priestory">Priestory</a></li>
-                    <li><a className='font-Ovo' href="#parkovanie">Parkovanie</a></li>
-                    <li><a className='font-Ovo' href="#kontakt">Kontakt</a></li>
+                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 relative hover:after:w-full after:content-[""] after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-gray-600 after:w-0 after:transition-all after:duration-300' href="#top">Domov</a></li>
+                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 relative hover:after:w-full after:content-[""] after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-gray-600 after:w-0 after:transition-all after:duration-300' href="#popis">Popis</a></li>
+                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 relative hover:after:w-full after:content-[""] after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-gray-600 after:w-0 after:transition-all after:duration-300' href="#priestory">Priestory</a></li>
+                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 relative hover:after:w-full after:content-[""] after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-gray-600 after:w-0 after:transition-all after:duration-300' href="#parkovanie">Parkovanie</a></li>
+                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 relative hover:after:w-full after:content-[""] after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-gray-600 after:w-0 after:transition-all after:duration-300' href="#kontakt">Kontakt</a></li>
                 </ul>
                 <div className='flex items-center gap-4'>
                     <button>
@@ -55,11 +65,11 @@ const Navbar = () => {
                     <div onClick={closeMenu} className='absolute top-6 right-6'>
                         <Image src={assets.close_black} alt='' className='w-5 cursor-pointer'/>
                     </div>
-                    <li><a className='font-Ovo' onClick={closeMenu} href="#top">Domov</a></li>
-                    <li><a className='font-Ovo' onClick={closeMenu} href="#popis">Popis</a></li>
-                    <li><a className='font-Ovo' onClick={closeMenu} href="#priestory">Priestory</a></li>
-                    <li><a className='font-Ovo' onClick={closeMenu} href="#parkovanie">Parkovanie</a></li>
-                    <li><a className='font-Ovo' onClick={closeMenu} href="#kontakt">Kontakt</a></li>
+                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 hover:pl-2' onClick={closeMenu} href="#top">Domov</a></li>
+                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 hover:pl-2' onClick={closeMenu} href="#popis">Popis</a></li>
+                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 hover:pl-2' onClick={closeMenu} href="#priestory">Priestory</a></li>
+                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 hover:pl-2' onClick={closeMenu} href="#parkovanie">Parkovanie</a></li>
+                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 hover:pl-2' onClick={closeMenu} href="#kontakt">Kontakt</a></li>
                 </ul>
 
             </nav>

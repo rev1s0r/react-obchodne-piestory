@@ -76,27 +76,55 @@ export const assets = {
     right_arrow_bold_dark
 };
 
-export const workData = [
+export const SpacesData = [
     {
-        title: 'Frontend project',
-        description: 'Web Design',
-        bgImage: '/work-1.png',
+        title: 'Obchodík Nina',
+        description: 'prízemie 240 m²',
+        bgImage: '/obchodik-nina.jpg',
+        url: 'https://www.facebook.com/p/Obchod%C3%ADk-Nina-zdrav%C3%A1-v%C3%BD%C5%BEiva-100063764882252/'
     },
     {
-        title: 'Geo based app',
-        description: 'Mobile App',
-        bgImage: '/work-2.png',
+        title: 'Špaldová pekáreň',
+        description: 'prízemie 30 m²',
+        bgImage: '/spaldova-pekaren.jpg',
+        url: 'https://www.facebook.com/spaldovapekaren/?locale=sk_SK'
     },
     {
-        title: 'Photography site',
-        description: 'Web Design',
-        bgImage: '/work-3.png',
+        title: 'Playground - škola',
+        description: 'prízemie 80 m²',
+        bgImage: '/playground.jpg',
+        url: 'https://www.facebook.com/p/Playground-Slovakia-Dance-School-61559752421014/'
     },
     {
-        title: 'UI/UX designing',
-        description: 'UI/UX Design',
-        bgImage: '/work-4.png',
+        title: 'Playground - obchod',
+        description: 'prízemie 12 m²',
+        bgImage: '/playground-shop.jpg',
+        url: 'https://www.facebook.com/p/Playground-Slovakia-Dance-School-61559752421014/'
     },
+    {
+        title: 'Masáže Ayusha',
+        description: '1. posch 38 m²',
+        bgImage: '/ayusha.jpg',
+        url: 'https://www.facebook.com/p/Mas%C3%A1%C5%BEe-Ayusha-61557338005070/'
+    },
+    {
+        title: 'Sweet feet - pedikúra',
+        description: '1. posch 50 m²',
+        bgImage: '/sweet-feet.jpg',
+        url: 'https://visblee.sk/pedikura-sweet-feet'
+    },
+    {
+        title: 'LB Beauty Derma',
+        description: '1. posch 38 m²',
+        bgImage: '/derma.png',
+        url: 'https://visblee.sk/lb-beauty-derma'
+    },
+    {
+        title: 'Partners Group',
+        description: '1. posch 32 m²',
+        bgImage: '/partners.png',
+        url: 'https://sk.linkedin.com/in/kl%C3%A1ra-polonsk%C3%A1-b6aa68202'
+    }
 ]
 
 export const serviceData = [

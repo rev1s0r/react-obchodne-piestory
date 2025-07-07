@@ -1,34 +1,55 @@
 <?php
-// Basic error handling
+header('Access-Control-Allow-Origin: http://localhost:3000');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    exit(0);
+}
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Check if POST request
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    die("Error: Only POST method allowed");
+    header('Content-Type: application/json');
+    http_response_code(405);
+    echo json_encode(['status' => 'error', 'message' => 'Only POST method allowed']);
+    exit;
 }
 
-// Validate required fields
-if (empty($_POST["name"]) || empty($_POST["email"]) || empty($_POST["subject"]) || empty($_POST["message"])) {
-    die("Error: All fields are required");
+// Get form data from JSON
+$input = json_decode(file_get_contents('php://input'), true);
+
+if (!$input) {
+    header('Content-Type: application/json');
+    http_response_code(400);
+    echo json_encode(['status' => 'error', 'message' => 'Invalid JSON data']);
+    exit;
 }
 
-// Get form data
-$name = $_POST["name"];
-$email = $_POST["email"];
-$subject = $_POST["subject"];
-$message = $_POST["message"];
+$name = $input['name'] ?? '';
+$email = $input['email'] ?? '';
+$subject = $input['subject'] ?? '';
+$message = $input['message'] ?? '';
 
-// Load configuration
+if (empty($name) || empty($email) || empty($subject) || empty($message)) {
+    header('Content-Type: application/json');
+    http_response_code(400);
+    echo json_encode(['status' => 'error', 'message' => 'All fields are required']);
+    exit;
+}
+
 require_once "config.php";
 
 try {
     loadEmailConfig();
 } catch (Exception $e) {
-    die("Error: " . $e->getMessage());
+    header('Content-Type: application/json');
+    http_response_code(500);
+    echo json_encode(['status' => 'error', 'message' => 'Configuration error']);
+    exit;
 }
 
-// Load PHPMailer
 require "../../vendor/autoload.php";
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -36,7 +57,6 @@ use PHPMailer\PHPMailer\Exception;
 $mail = new PHPMailer(true);
 
 try {
-    // SMTP configuration
     $mail->isSMTP();
     $mail->SMTPAuth = true;
     $mail->Host = getenv('SMTP_HOST');
@@ -45,7 +65,6 @@ try {
     $mail->Username = getenv('SMTP_USERNAME');
     $mail->Password = getenv('SMTP_PASSWORD');
     
-    // Recipients
     $mail->setFrom(
         getenv('EMAIL_FROM'), 
         getenv('EMAIL_FROM_NAME') ?: 'Kontaktný formulár'
@@ -56,7 +75,6 @@ try {
     );
     $mail->addReplyTo($email, $name);
     
-    // Content
     $mail->isHTML(false);
     $mail->Subject = "Kontakt z webu: " . $subject;
     $mail->Body = "Meno: " . $name . "\n";
@@ -64,19 +82,22 @@ try {
     $mail->Body .= "Predmet: " . $subject . "\n\n";
     $mail->Body .= "Správa:\n" . $message;
     
-    // Send email
     $mail->send();
-    echo "<h2>✅ Email bol úspešne odoslaný!</h2>";
-    echo '<p><a href="javascript:history.back()">← Späť na formulár</a></p>';
+    
+    header('Content-Type: application/json');
+    echo json_encode([
+        'status' => 'success',
+        'message' => 'Email bol úspešne odoslaný!'
+    ]);
     
 } catch (Exception $e) {
-    echo "<h2>❌ Chyba pri odosielaní emailu</h2>";
-    echo "<p>Skúste to prosím neskôr alebo nás kontaktujte priamo.</p>";
-    echo '<p><a href="javascript:history.back()">← Späť na formulár</a></p>';
+    header('Content-Type: application/json');
+    http_response_code(500);
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Chyba pri odosielaní emailu. Skúste to neskôr.'
+    ]);
     
-    // Log error for debugging (optional)
     error_log("Email error: " . $e->getMessage());
 }
 ?>
-
-
