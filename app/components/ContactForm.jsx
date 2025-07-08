@@ -1,12 +1,20 @@
-const Header = () => {
+'use client'
+import React from 'react'
+import { useState } from 'react';
+import Image from 'next/image';     
+import { assets } from '@/assets/assets';
+
+
+const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    subject: '',
-    message: ''
+    message: '',
+    honeypot: '' // Anti-spam field
   });
   const [isLoading, setIsLoading] = useState(false);
   const [notification, setNotification] = useState(null);
+  const [formStartTime] = useState(Date.now()); // Track when form was loaded
 
   const handleChange = (e) => {
     setFormData({
@@ -20,6 +28,28 @@ const Header = () => {
     setIsLoading(true);
     setNotification(null);
 
+    // Client-side validation
+    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+      setNotification({ type: 'error', message: 'Všetky polia sú povinné' });
+      setIsLoading(false);
+      return;
+    }
+
+    // Honeypot check - if filled, it's likely a bot
+    if (formData.honeypot) {
+      setNotification({ type: 'error', message: 'Spam detekovaný' });
+      setIsLoading(false);
+      return;
+    }
+
+    // Time-based check - form submitted too quickly (less than 3 seconds)
+    const timeTaken = Date.now() - formStartTime;
+    if (timeTaken < 3000) {
+      setNotification({ type: 'error', message: 'Formulár bol odoslaný príliš rýchlo' });
+      setIsLoading(false);
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost/react-obchodne-priestory/react-obchodne-piestory/public/send-mail.php', {
         method: 'POST',
@@ -31,7 +61,7 @@ const Header = () => {
       
       if (result.status === 'success') {
         setNotification({ type: 'success', message: result.message });
-        setFormData({ name: '', email: '', subject: '', message: '' });
+        setFormData({ name: '', email: '', message: '', honeypot: '' });
       } else {
         setNotification({ type: 'error', message: result.message });
       }
@@ -43,13 +73,13 @@ const Header = () => {
   };
 
   return (
-    <div className="pt-32 p-8 bg-gray-100 min-h-screen">
-        <div className="z-[100] relative max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg">
-            <h2 className="text-xl font-bold mb-4">Kontakt</h2>
+    <div className="">
+        <div className="z-[100] relative h-full bg-white/90 backdrop-blur-sm p-8 rounded-lg shadow-lg">
+            <h2 className="text-2xl font-bold mb-6">Kontakt</h2>
             
             {/* Notification */}
             {notification && (
-              <div className={`mb-4 p-3 rounded ${
+              <div className={`mb-6 p-4 rounded ${
                 notification.type === 'success' 
                   ? 'bg-green-100 border border-green-400 text-green-700' 
                   : 'bg-red-100 border border-red-400 text-red-700'
@@ -73,14 +103,26 @@ const Header = () => {
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Honeypot field - hidden from users */}
+                <input 
+                  type="text"
+                  name="honeypot"
+                  value={formData.honeypot}
+                  onChange={handleChange}
+                  style={{ display: 'none' }}
+                  tabIndex="-1"
+                  autoComplete="off"
+                />
+                
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
               <input 
                 type="text" 
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Vaše meno"
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="p-3 outline-none border-[0.5px] border-gray-400 rounded-md bg-white"
                 required
                 disabled={isLoading}
               />
@@ -89,52 +131,45 @@ const Header = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="Váš email"
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Váš e-mail"
+                className="p-3 outline-none border-[0.5px] border-gray-400 rounded-md bg-white"
                 required
                 disabled={isLoading}
               />
-              <input 
-                type="text" 
-                name="subject"
-                value={formData.subject}
-                onChange={handleChange}
-                placeholder="Predmet správy"
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-                disabled={isLoading}
-              />
+              </div>
               <textarea 
+                rows="6"
                 name="message" 
                 value={formData.message}
                 onChange={handleChange}
-                placeholder="Vaša správa"
-                rows="4"
-                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Text správy"
+                className="w-full p-4 outline-none border-[0.5px] border-gray-400 rounded-md bg-white resize-none"
                 required
                 disabled={isLoading}
               ></textarea>
               
-              <button 
-                type="submit"
-                disabled={isLoading}
-                className={`w-full p-2 rounded transition-colors ${
-                  isLoading 
-                    ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'bg-blue-500 hover:bg-blue-600'
-                } text-white`}
-              >
-                {isLoading ? (
-                  <div className="flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    Odosielam...
-                  </div>
-                ) : (
-                  'Odoslať'
-                )}
-              </button>
+              <div className="text-center">
+                <button 
+                  type="submit"
+                  disabled={isLoading}
+                  className="py-3 px-8 inline-flex items-center gap-2 bg-black/80 text-white rounded-full hover:bg-black duration-500 transition-all"
+                  >
+                  {isLoading ? (
+                    <div className="flex items-center justify-center">
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                      Odosielam...
+                    </div>
+                  ) : (
+                    <>
+                      Odoslať <Image src={assets.right_arrow_white} alt="" className="w-4" />
+                    </>
+                  )}
+                </button>
+              </div>
             </form>
         </div>
     </div>
   )
 }
+
+export default ContactForm

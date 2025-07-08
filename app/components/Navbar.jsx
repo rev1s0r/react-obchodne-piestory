@@ -6,10 +6,21 @@ import { useState, useRef, useEffect } from 'react';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
     const menuRef = useRef();
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     const closeMenu = () => setIsMenuOpen(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollY = window.scrollY;
+            setIsScrolled(scrollY > 50); // After 50px of scroll
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     useEffect(() => {
         if (!isMenuOpen) return;
@@ -26,7 +37,11 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className='w-full fixed px-5 lg:px-8 xl:px-[8%] py-4 flex items-center justify-between z-50'>
+            <nav className={`w-full fixed px-5 lg:px-8 xl:px-[8%] py-4 flex items-center justify-between z-50 transition-all duration-500 ${
+                isScrolled 
+                    ? 'bg-white shadow-lg backdrop-blur-sm' 
+                    : 'bg-transparent'
+            }`}>
                 <a href="#top">
                     <div className="mr-4 cursor-pointer text-l md:text-xl font-bold text-gray-800 hover:text-gray-600 transition-colors duration-300 flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 md:w-6 md:h-6 text-gray-800">
@@ -43,11 +58,13 @@ const Navbar = () => {
                         </div>
                     </div>
                 </a>
-                <ul className='hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 bg-white shadow-sm bg-opacity-50'>
-                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 relative hover:after:w-full after:content-[""] after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-gray-600 after:w-0 after:transition-all after:duration-300' href="#top">Domov</a></li>
-                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 relative hover:after:w-full after:content-[""] after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-gray-600 after:w-0 after:transition-all after:duration-300' href="#popis">Popis</a></li>
+                <ul className={`hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-12 py-3 shadow-sm transition-all duration-300 ${
+                    isScrolled 
+                        ? 'bg-gray-50 bg-opacity-80' 
+                        : 'bg-white bg-opacity-50'
+                }`}>
+                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 relative hover:after:w-full after:content-[""] after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-gray-600 after:w-0 after:transition-all after:duration-300' href="#top">Úvod</a></li>
                     <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 relative hover:after:w-full after:content-[""] after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-gray-600 after:w-0 after:transition-all after:duration-300' href="#priestory">Priestory</a></li>
-                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 relative hover:after:w-full after:content-[""] after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-gray-600 after:w-0 after:transition-all after:duration-300' href="#parkovanie">Parkovanie</a></li>
                     <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 relative hover:after:w-full after:content-[""] after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-gray-600 after:w-0 after:transition-all after:duration-300' href="#kontakt">Kontakt</a></li>
                 </ul>
                 <div className='flex items-center gap-4'>
@@ -65,10 +82,8 @@ const Navbar = () => {
                     <div onClick={closeMenu} className='absolute top-6 right-6'>
                         <Image src={assets.close_black} alt='' className='w-5 cursor-pointer'/>
                     </div>
-                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 hover:pl-2' onClick={closeMenu} href="#top">Domov</a></li>
-                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 hover:pl-2' onClick={closeMenu} href="#popis">Popis</a></li>
+                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 hover:pl-2' onClick={closeMenu} href="#top">Úvod</a></li>
                     <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 hover:pl-2' onClick={closeMenu} href="#priestory">Priestory</a></li>
-                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 hover:pl-2' onClick={closeMenu} href="#parkovanie">Parkovanie</a></li>
                     <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 hover:pl-2' onClick={closeMenu} href="#kontakt">Kontakt</a></li>
                 </ul>
 

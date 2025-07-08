@@ -29,10 +29,47 @@ if (!$input) {
 
 $name = $input['name'] ?? '';
 $email = $input['email'] ?? '';
-$subject = $input['subject'] ?? '';
 $message = $input['message'] ?? '';
+$honeypot = $input['honeypot'] ?? '';
 
-if (empty($name) || empty($email) || empty($subject) || empty($message)) {
+// Honeypot check
+if (!empty($honeypot)) {
+    header('Content-Type: application/json');
+    http_response_code(400);
+    echo json_encode(['status' => 'error', 'message' => 'Spam detected']);
+    exit;
+}
+
+// Basic spam keyword detection
+$spamKeywords = ['viagra', 'casino', 'loan', 'money', 'winner', 'congratulations', 'click here', 'buy now'];
+$messageWords = strtolower($message . ' ' . $name);
+foreach ($spamKeywords as $keyword) {
+    if (strpos($messageWords, $keyword) !== false) {
+        header('Content-Type: application/json');
+        http_response_code(400);
+        echo json_encode(['status' => 'error', 'message' => 'Spam content detected']);
+        exit;
+    }
+}
+
+// Rate limiting - simple IP-based check
+session_start();
+$currentTime = time();
+$ipAddress = $_SERVER['REMOTE_ADDR'];
+
+if (isset($_SESSION['last_submission'])) {
+    $timeDiff = $currentTime - $_SESSION['last_submission'];
+    if ($timeDiff < 60) { // 1 minute between submissions
+        header('Content-Type: application/json');
+        http_response_code(429);
+        echo json_encode(['status' => 'error', 'message' => 'Too many requests. Please wait before submitting again.']);
+        exit;
+    }
+}
+
+$_SESSION['last_submission'] = $currentTime;
+
+if (empty($name) || empty($email) || empty($message)) {
     header('Content-Type: application/json');
     http_response_code(400);
     echo json_encode(['status' => 'error', 'message' => 'All fields are required']);
@@ -76,10 +113,9 @@ try {
     $mail->addReplyTo($email, $name);
     
     $mail->isHTML(false);
-    $mail->Subject = "Kontakt z webu: " . $subject;
+    $mail->Subject = "Kontakt z webu";
     $mail->Body = "Meno: " . $name . "\n";
-    $mail->Body .= "Email: " . $email . "\n";
-    $mail->Body .= "Predmet: " . $subject . "\n\n";
+    $mail->Body .= "Email: " . $email . "\n\n";
     $mail->Body .= "Správa:\n" . $message;
     
     $mail->send();

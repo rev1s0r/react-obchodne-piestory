@@ -4,16 +4,16 @@ import Image from 'next/image'
 
 const Spaces = () => {
     return (
-        <div id='work' className='w-full px-[12%] py-10 scroll-mt-20'>
+        <div id='spaces' className='w-full px-[12%] pt-32 md:pt-18   pb-10 scroll-mt-20'>
             <h2 className='text-center text-5xl font-Ovo'>
                 Prenajímame nasledovné priestory
             </h2>
 
-            <p className='text-center max-w-2xl mx-auto mt-5 mb-12 font-Ovo'>
+            <p className='text-center max-w-2xl mx-auto mt-12 mb-12 font-Ovo'>
                 Ponúkame na prenájom obchodné priestory v centre Nového Mesta nad Váhom na ul. Hurbanova v blízkosti troch parkovísk pre návštevníkov. Budova je dvojpodlažná a disponuje dvoma zásobovacími vstupmi po stranách s parkovacou plochou.
             </p>
 
-            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 my-10 gap-5'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 my-10 gap-5'>
                 {SpacesData.map((space, index) => (
                     <a key={index} href={`${space.url}`} target="_blank" rel="noopener noreferrer" className="block">
                         <div className="aspect-square bg-no-repeat bg-cover bg-center rounded-lg 
