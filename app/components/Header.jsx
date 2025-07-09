@@ -4,7 +4,7 @@ import { assets } from '@/assets/assets'
 
 const Header = () => {
   return (
-    <div className='w-full max-w-7xl mx-auto h-screen flex flex-col lg:flex-row items-center justify-center gap-8 px-5 lg:px-8 pt-46 lg:pt-0 relative'>
+    <div id='header' className='w-full max-w-7xl mx-auto h-screen flex flex-col lg:flex-row items-center justify-center gap-8 px-5 lg:px-8 pt-46 lg:pt-0 relative'>
       {/* Ľavá strana - Texty */}
       <div className='flex-1 text-center lg:text-left relative z-10'>
         <h1 className='text-2xl sm:text-3xl lg:text-4xl xl:text-[50px] font-Outfit font-bold mb-6 bg-gradient-to-r from-gray-900 via-gray-700 to-gray-600 bg-clip-text text-transparent leading-tight animate-fade-in'>

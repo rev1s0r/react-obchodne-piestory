@@ -15,9 +15,9 @@ const Navbar = () => {
     useEffect(() => {
         const handleScroll = () => {
             const scrollY = window.scrollY;
-            setIsScrolled(scrollY > 50); // After 50px of scroll
+            setIsScrolled(scrollY > 0); 
         };
-
+        handleScroll();  
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
@@ -42,7 +42,7 @@ const Navbar = () => {
                     ? 'bg-white shadow-lg backdrop-blur-sm' 
                     : 'bg-transparent'
             }`}>
-                <a href="#top">
+                <a href="#header">
                     <div className="mr-4 cursor-pointer text-l md:text-xl font-bold text-gray-800 hover:text-gray-600 transition-colors duration-300 flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 md:w-6 md:h-6 text-gray-800">
                             <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/>
@@ -63,15 +63,11 @@ const Navbar = () => {
                         ? 'bg-gray-50 bg-opacity-80' 
                         : 'bg-white bg-opacity-50'
                 }`}>
-                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 relative hover:after:w-full after:content-[""] after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-gray-600 after:w-0 after:transition-all after:duration-300' href="#top">Úvod</a></li>
-                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 relative hover:after:w-full after:content-[""] after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-gray-600 after:w-0 after:transition-all after:duration-300' href="#priestory">Priestory</a></li>
-                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 relative hover:after:w-full after:content-[""] after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-gray-600 after:w-0 after:transition-all after:duration-300' href="#kontakt">Kontakt</a></li>
+                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 relative hover:after:w-full after:content-[""] after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-gray-600 after:w-0 after:transition-all after:duration-300' href="#header">Úvod</a></li>
+                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 relative hover:after:w-full after:content-[""] after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-gray-600 after:w-0 after:transition-all after:duration-300' href="#spaces">Priestory</a></li>
+                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 relative hover:after:w-full after:content-[""] after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-gray-600 after:w-0 after:transition-all after:duration-300' href="#contact">Kontakt</a></li>
                 </ul>
                 <div className='flex items-center gap-4'>
-                    <button>
-                        <Image src={assets.moon_icon} alt='' className='w-6' />
-                    </button>
-
                     <a href="#contact" className='font-Ovo hidden lg:flex items-center gap-3 px-10 py-2.5 border border-gray-500 rounded-full ml-4'>Kontakt <Image src={assets.arrow_icon} alt="" className="w-3" /></a>
                     <button className='block md:hidden ml-3' onClick={toggleMenu}>
                         <Image src={assets.menu_black} alt='' className='w-6' />

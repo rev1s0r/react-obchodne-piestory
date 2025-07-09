@@ -1,6 +1,7 @@
 'use client'
 import React from 'react'
 import ContactForm from './ContactForm'
+import { assets } from '@/assets/assets' 
 
 const Contact = () => {
   return (
@@ -30,9 +31,9 @@ const Contact = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-lg mb-1">Adresa</h4>
-                  <p className="text-gray-600">Hurbanova 760/17</p>
-                  <p className="text-gray-600">Nové Mesto nad Váhom</p>
-                  <p className="text-gray-600">915 01</p>
+                  <p>Hurbanova 760/17</p>
+                  <p>Nové Mesto nad Váhom</p>
+                  <p>915 01</p>
                 </div>
               </div>
 
@@ -45,7 +46,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-lg mb-1">Telefón</h4>
-                  <a href="tel:+421904352987" className="text-gray-600 hover:text-black transition-colors">
+                  <a href="tel:+421904352987" className="hover:text-black transition-colors">
                     +421 904 352 987
                   </a>
                 </div>
@@ -60,7 +61,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-lg mb-1">Email</h4>
-                  <a href="mailto:info@obchodnepriesotry.sk" className="text-gray-600 hover:text-black transition-colors">
+                  <a href="mailto:info@obchodnepriesotry.sk" className="hover:text-black transition-colors">
                     info(zavinac)obchodnepriestory.sk
                   </a>
                 </div>

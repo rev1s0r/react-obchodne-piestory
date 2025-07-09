@@ -4,17 +4,16 @@ import { useState } from 'react';
 import Image from 'next/image';     
 import { assets } from '@/assets/assets';
 
-
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: '',
-    honeypot: '' // Anti-spam field
+    honeypot: '' 
   });
   const [isLoading, setIsLoading] = useState(false);
   const [notification, setNotification] = useState(null);
-  const [formStartTime] = useState(Date.now()); // Track when form was loaded
+  const [formStartTime] = useState(Date.now()); 
 
   const handleChange = (e) => {
     setFormData({
@@ -51,7 +50,7 @@ const ContactForm = () => {
     }
 
     try {
-      const response = await fetch('http://localhost/react-obchodne-priestory/react-obchodne-piestory/public/send-mail.php', {
+      const response = await fetch('http://localhost/react-obchodne-piestory/send-mail.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -74,10 +73,9 @@ const ContactForm = () => {
 
   return (
     <div className="">
-        <div className="z-[100] relative h-full bg-white/90 backdrop-blur-sm p-8 rounded-lg shadow-lg">
+        <div className="z-[40] relative h-full bg-white/90 backdrop-blur-sm p-8 rounded-lg shadow-lg">
             <h2 className="text-2xl font-bold mb-6">Kontakt</h2>
             
-            {/* Notification */}
             {notification && (
               <div className={`mb-6 p-4 rounded ${
                 notification.type === 'success' 
@@ -103,8 +101,7 @@ const ContactForm = () => {
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Honeypot field - hidden from users */}
+            <form onSubmit={handleSubmit} className=" space-y-6">
                 <input 
                   type="text"
                   name="honeypot"

@@ -1,5 +1,5 @@
 import React from 'react'
-import { assets, SpacesData } from '@/assets/assets'
+import { assets, SpacesData } from '../../assets/assets.js'
 import Image from 'next/image'
 
 const Spaces = () => {

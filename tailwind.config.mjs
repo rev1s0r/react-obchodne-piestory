@@ -10,11 +10,7 @@ export default {
         Outfit: ['var(--font-outfit)', 'Outfit', 'sans-serif'],
         Ovo: ['var(--font-ovo)', 'Ovo', 'serif'],
       },
-      colors: {
-        lighthover: '#fcf4ff',
-        darkhover: '#2a004a',
-        darktheme: '#11001f',
-      }
     },
   },
+  plugins:[],
 };

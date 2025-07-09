@@ -16,7 +16,10 @@ function loadEnv($filePath) {
 
 function loadEmailConfig() {
     // Try to load .env file
-    $envLoaded = loadEnv(__DIR__ . "/../../.env") || loadEnv(__DIR__ . "/../../../.env");
+    $envLoaded = loadEnv(__DIR__ . "/../../.env") 
+        || loadEnv(__DIR__ . "/../../../.env") 
+        || loadEnv(__DIR__ . "/../.env") 
+        || loadEnv(__DIR__ . "/.env");
     
     if (!$envLoaded) {
         throw new Exception("Configuration file not found. Please contact administrator.");
