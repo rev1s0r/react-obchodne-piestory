@@ -4,8 +4,8 @@ import Image from 'next/image'
 
 const Spaces = () => {
     return (
-        <div id='spaces' className='w-full px-[12%] pt-32 md:pt-18   pb-10 scroll-mt-20'>
-            <h2 className='text-center text-5xl font-Ovo'>
+        <div id='spaces' className='w-full px-[12%] pt-16 md:pt-32 pb-10 scroll-mt-20'>
+            <h2 className='text-center text-4xl font-Ovo'>
                 Prenajímame nasledovné priestory
             </h2>
 

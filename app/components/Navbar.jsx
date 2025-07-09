@@ -78,9 +78,9 @@ const Navbar = () => {
                     <div onClick={closeMenu} className='absolute top-6 right-6'>
                         <Image src={assets.close_black} alt='' className='w-5 cursor-pointer'/>
                     </div>
-                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 hover:pl-2' onClick={closeMenu} href="#top">Úvod</a></li>
-                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 hover:pl-2' onClick={closeMenu} href="#priestory">Priestory</a></li>
-                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 hover:pl-2' onClick={closeMenu} href="#kontakt">Kontakt</a></li>
+                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 hover:pl-2' onClick={closeMenu} href="#theader">Úvod</a></li>
+                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 hover:pl-2' onClick={closeMenu} href="#spaces">Priestory</a></li>
+                    <li><a className='font-Ovo hover:text-gray-600 transition-colors duration-300 hover:pl-2' onClick={closeMenu} href="#contact">Kontakt</a></li>
                 </ul>
 
             </nav>

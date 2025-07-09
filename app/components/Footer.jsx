@@ -28,16 +28,20 @@ const Footer = () => {
             </div>
 
             {/* Nový footer s copyright a sociálnymi sieťami */}
-            <div className='text-center md:flex items-center justify-between border-t border-gray-400 mx-[10%] mt-12 py-6'>
+            <div className='text-center flex flex-col md:flex-row items-center justify-between border-t border-gray-400 mx-[10%] mt-12 py-6'>
                 <p>© 2025 Obchodné priestory. All rights reserved.</p>
-                <ul className='flex items-center gap-10 justify-center mt-4 md:mt-0'>
-                    <li><a href="mailto:info@obchodnepriesotry.sk" className=" hover:text-black transition-colors">
-                    info(zavinac)obchodnepriestory.sk
-            </a></li>
-                    <li><a href="tel:+421904352987" className="hover:text-black transition-colors">
-                    +421 904 352 987
-                  </a></li>
-                </ul>   
+                <ul className="flex flex-col md:flex-row items-center gap-2 md:gap-10 justify-center mt-4 md:mt-0">
+                    <li>
+                        <a href="mailto:info@obchodnepriestory.sk" className="hover:text-black transition-colors">
+                            info(zavinac) obchodnepriestory.sk
+                        </a>
+                    </li>
+                    <li>
+                        <a href="tel:+421904352987" className="hover:text-black transition-colors">
+                            +421 904 352 987
+                        </a>
+                    </li>
+                </ul>
             </div>
         </>
     )
