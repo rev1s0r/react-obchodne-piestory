@@ -1,5 +1,4 @@
 <?php
-// Configuration loader for email functionality
 
 function loadEnv($filePath) {
     if (file_exists($filePath)) {
@@ -15,17 +14,12 @@ function loadEnv($filePath) {
 }
 
 function loadEmailConfig() {
-    // Try to load .env file
-    $envLoaded = loadEnv(__DIR__ . "/../../.env") 
-        || loadEnv(__DIR__ . "/../../../.env") 
-        || loadEnv(__DIR__ . "/../.env") 
-        || loadEnv(__DIR__ . "/.env");
+    $envLoaded = loadEnv(__DIR__ . "/.env");
     
     if (!$envLoaded) {
         throw new Exception("Configuration file not found. Please contact administrator.");
     }
     
-    // Verify required environment variables are set
     $requiredVars = ['SMTP_HOST', 'SMTP_PORT', 'SMTP_USERNAME', 'SMTP_PASSWORD', 'EMAIL_FROM', 'EMAIL_TO'];
     foreach ($requiredVars as $var) {
         if (!getenv($var)) {

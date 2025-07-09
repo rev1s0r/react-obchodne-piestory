@@ -3,13 +3,11 @@ require __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/config.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Content-Type');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { exit; }
-
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Content-Type: application/json');
@@ -18,7 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// Get form data from JSON
 $input = json_decode(file_get_contents('php://input'), true);
 
 if (!$input) {
@@ -33,7 +30,6 @@ $email = $input['email'] ?? '';
 $message = $input['message'] ?? '';
 $honeypot = $input['honeypot'] ?? '';
 
-// Honeypot check
 if (!empty($honeypot)) {
     header('Content-Type: application/json');
     http_response_code(400);
@@ -41,7 +37,6 @@ if (!empty($honeypot)) {
     exit;
 }
 
-// Basic spam keyword detection
 $spamKeywords = ['viagra', 'casino', 'loan', 'money', 'winner', 'congratulations', 'click here', 'buy now'];
 $messageWords = strtolower($message . ' ' . $name);
 foreach ($spamKeywords as $keyword) {
@@ -53,31 +48,12 @@ foreach ($spamKeywords as $keyword) {
     }
 }
 
-// Rate limiting - simple IP-based check
-session_start();
-$currentTime = time();
-$ipAddress = $_SERVER['REMOTE_ADDR'];
-
-if (isset($_SESSION['last_submission'])) {
-    $timeDiff = $currentTime - $_SESSION['last_submission'];
-    if ($timeDiff < 60) { // 1 minute between submissions
-        header('Content-Type: application/json');
-        http_response_code(429);
-        echo json_encode(['status' => 'error', 'message' => 'Too many requests. Please wait before submitting again.']);
-        exit;
-    }
-}
-
-$_SESSION['last_submission'] = $currentTime;
-
 if (empty($name) || empty($email) || empty($message)) {
     header('Content-Type: application/json');
     http_response_code(400);
-    echo json_encode(['status' => 'error', 'message' => 'All fields are required']);
+    echo json_encode(['status' => 'error', 'message' => 'Všetky polia sú povinné']);
     exit;
 }
-
-
 
 try {
     loadEmailConfig();
@@ -129,7 +105,7 @@ try {
     echo json_encode([
         'status' => 'error',
         'message' => 'Chyba pri odosielaní emailu',
-        'debug' => $e->getMessage() // <-- pridajte toto
+        'debug' => $e->getMessage() 
     ]);
     error_log("Email error: " . $e->getMessage());
 }
